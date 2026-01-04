@@ -4,7 +4,7 @@ const Field = ({ children, htmlFor, label, error }) => {
   const id = htmlFor || getChildId(children);
   return (
     <div className="from-control">
-      {label && <label htmlFor={id}>{children}</label>}
+      {label && <label htmlFor={id}>{label}</label>}
       {children}
       {error && (
         <div role="alert" className="text-red-500">

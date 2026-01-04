@@ -1,41 +1,54 @@
 import { useForm } from "react-hook-form";
 import Field from "../common/Field";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const From = () => {
-  const {handleSubmit, register, formState: {errors}} = useForm();
-  const submitFrom= (fromData)=>{
-    console.log(fromData);
-    
-  }
+  const navigate = useNavigate();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+  const submitFrom = async (fromData) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/login`,
+        fromData
+      );
+      
+      if (response.status === 200) {
+        navigate("/d");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <form onSubmit={handleSubmit(submitFrom)}>
       <div className="mb-3">
-        <div className="relative">
-          <Field label="email" error={errors.email}>
-              <input
-              {...register("email", {required: "This field is required"})}
+        <Field label="Email" error={errors.email}>
+          <input
+            {...register("email", { required: "This field is required" })}
             type="email"
             id="email"
             className="form-input"
             placeholder="Phone number, username, or email"
-            aria-label="Phone number, username, or email"
           />
-          </Field>
-          
-        </div>
+        </Field>
       </div>
 
       <div className="mb-3">
         <div className="relative">
           <Field label="password" error={errors.password}>
-          <input
-          {...register("password", {required: "This field is required"})}
-            type="password"
-            id="password"
-            className="form-input"
-            placeholder="Password"
-            aria-label="Password"
-          />
+            <input
+              {...register("password", { required: "This field is required" })}
+              type="password"
+              id="password"
+              className="form-input"
+              placeholder="Password"
+              aria-label="Password"
+            />
           </Field>
           <button
             type="button"
