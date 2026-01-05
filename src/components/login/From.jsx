@@ -2,9 +2,11 @@ import { useForm } from "react-hook-form";
 import Field from "../common/Field";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAxios } from "../../hooks/useAxios";
 
 const From = () => {
   const navigate = useNavigate();
+  const {api} = useAxios();
   const {
     handleSubmit,
     register,
@@ -12,13 +14,13 @@ const From = () => {
   } = useForm();
   const submitFrom = async (fromData) => {
     try {
-      const response = await axios.post(
+      const response = await api.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/auth/login`,
         fromData
       );
       
       if (response.status === 200) {
-        navigate("/d");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

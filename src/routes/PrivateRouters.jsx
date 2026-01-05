@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import SideBar from "../components/common/SideBar";
 import { Outlet } from "react-router-dom";
 import Login from "../page/Login";
+import { useAuth } from "../hooks/useAuth";
 
 const PrivateRouters = () => {
+  const { auth } = useAuth();
   const [show, isShow] = useState(false);
   useEffect(() => {
     const timer = setInterval(() => {
@@ -17,7 +19,8 @@ const PrivateRouters = () => {
       <div class="max-w-6xl mx-auto w-full py-10">
         <Outlet />
       </div>
-      {show && <Login />}
+      {/* {show && <Login />} */}
+      {!auth?.authToken ? <Login/> : ""}
     </div>
   );
 };
